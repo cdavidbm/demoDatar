@@ -11,6 +11,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from typing import Dict, List, Any
 from google.adk.agents.llm_agent import Agent
+from google.adk.runners import InMemoryRunner
+from google.genai.types import Part, Content
 
 # Importar los agentes individuales
 try:
@@ -29,37 +31,37 @@ AGENTES = {
     "pasto_bogotano": {
         "nombre": "PastoBogotano",
         "descripcion": "Crea paisajes sonoros de Bogotá",
-        "agente": None,  # Se inicializará dinámicamente
+        "agente": pasto_bogotano_agent,
         "color": "#90EE90"
     },
     "susurro_paramo": {
         "nombre": "Susurro del Páramo",
         "descripcion": "Teje leyendas desde tu experiencia territorial",
-        "agente": None,
+        "agente": susurro_paramo_agent,
         "color": "#87CEEB"
     },
     "guatilaM": {
         "nombre": "GuatilaM",
         "descripcion": "Interpreta datos ambientales en texto y emojis",
-        "agente": None,
+        "agente": guatilaM_agent,
         "color": "#FFD700"
     },
     "diario_intuitivo": {
         "nombre": "Diario Intuitivo",
         "descripcion": "Visualiza ríos emocionales desde emojis",
-        "agente": None,
+        "agente": diario_intuitivo_agent,
         "color": "#FF69B4"
     },
     "bosque": {
         "nombre": "Agente Bosque",
         "descripcion": "Descubre la vida oculta del bosque",
-        "agente": None,
+        "agente": bosque_agent,
         "color": "#228B22"
     },
     "multimodal": {
         "nombre": "Agente Multi-Modal",
         "descripcion": "Conecta lo macro y lo micro de manera sistémica",
-        "agente": None,
+        "agente": multimodal_agent,
         "color": "#9370DB"
     }
 }
@@ -74,6 +76,16 @@ class OrchestrationAgent:
         self.agentes = AGENTES
         self.agente_activo = None
         self.historial_conversacion = []
+
+        # Crear runners para cada agente
+        self.runners = {}
+        self.sessions = {}  # sesiones por agente
+        for agente_id, agente_info in self.agentes.items():
+            if agente_info["agente"] is not None:
+                try:
+                    self.runners[agente_id] = InMemoryRunner(agent=agente_info["agente"])
+                except Exception as e:
+                    print(f"⚠️ Error al crear runner para {agente_id}: {e}")
 
     def obtener_lista_agentes(self) -> List[Dict[str, Any]]:
         """
@@ -144,16 +156,51 @@ class OrchestrationAgent:
                     "error": f"Agente '{target_agent}' no encontrado"
                 }
 
-            # Obtener el agente
-            agente_info = self.agentes[target_agent]
+            # Verificar que el runner existe
+            if target_agent not in self.runners:
+                return {
+                    "exitoso": False,
+                    "error": f"Agente '{target_agent}' no está disponible"
+                }
 
-            # Aquí se procesaría el mensaje con el agente real
-            # Por ahora, retornamos una respuesta simulada
+            # Obtener el agente y runner
+            agente_info = self.agentes[target_agent]
+            runner = self.runners[target_agent]
+
+            # Crear o recuperar sesión para este agente
+            if target_agent not in self.sessions:
+                self.sessions[target_agent] = await runner.session_service.create_session(
+                    app_name=runner.app_name,
+                    user_id="default_user"
+                )
+
+            session = self.sessions[target_agent]
+
+            # Crear el contenido del mensaje
+            content = Content(parts=[Part(text=mensaje)], role="user")
+
+            # Ejecutar el agente y recolectar la respuesta
+            respuesta_texto = ""
+            for event in runner.run(
+                user_id=session.user_id,
+                session_id=session.id,
+                new_message=content
+            ):
+                # Extraer el texto de la respuesta
+                if hasattr(event, 'content') and hasattr(event.content, 'parts'):
+                    for part in event.content.parts:
+                        if hasattr(part, 'text') and part.text:
+                            respuesta_texto += part.text
+
+            # Si no hay respuesta, usar un mensaje por defecto
+            if not respuesta_texto:
+                respuesta_texto = f"[{agente_info['nombre']}] procesó tu mensaje, pero no generó una respuesta de texto."
+
             respuesta = {
                 "exitoso": True,
                 "agente": agente_info["nombre"],
                 "agente_id": target_agent,
-                "mensaje": f"[{agente_info['nombre']}]: Procesando tu mensaje '{mensaje}'...",
+                "mensaje": respuesta_texto,
                 "color": agente_info["color"]
             }
 
@@ -161,12 +208,15 @@ class OrchestrationAgent:
             self.historial_conversacion.append({
                 "agente": target_agent,
                 "usuario": mensaje,
-                "respuesta": respuesta["mensaje"]
+                "respuesta": respuesta_texto
             })
 
             return respuesta
 
         except Exception as e:
+            import traceback
+            error_detail = traceback.format_exc()
+            print(f"❌ Error detallado al procesar mensaje: {error_detail}")
             return {
                 "exitoso": False,
                 "error": f"Error al procesar mensaje: {str(e)}"
@@ -177,9 +227,11 @@ class OrchestrationAgent:
         return self.historial_conversacion
 
     def limpiar_historial(self):
-        """Limpia el historial de conversaciones"""
+        """Limpia el historial de conversaciones y sesiones"""
         self.historial_conversacion = []
         self.agente_activo = None
+        # Limpiar las sesiones para reiniciar las conversaciones
+        self.sessions = {}
 
 # Crear instancia global del orquestador
 orchestrator = OrchestrationAgent()

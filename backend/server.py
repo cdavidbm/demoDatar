@@ -11,6 +11,10 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import os
 import sys
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde .env
+load_dotenv()
 
 # Agregar el directorio actual al path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
