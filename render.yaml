@@ -1,0 +1,62 @@
+# Configuración para despliegue en Render.com
+# {DATAR} - Laboratorio de Experimentación con Datos Ambientales
+
+services:
+  - type: web
+    name: datar-backend
+    env: python
+    region: oregon  # Cambia según tu preferencia: oregon, frankfurt, singapore, etc.
+    plan: free  # Opciones: free, starter, standard, pro
+    branch: main  # Rama de GitHub a desplegar
+    buildCommand: pip install -r requirements.txt
+    startCommand: python backend/server.py
+
+    # Variables de entorno
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+
+      - key: GOOGLE_GENAI_API_KEY
+        sync: false  # Esta debe configurarse manualmente en el dashboard de Render
+
+      - key: DEBUG_MODE
+        value: production
+
+      - key: DEFAULT_TEMPERATURE
+        value: "1.0"
+
+      - key: DEFAULT_MODEL
+        value: gemini-2.5-flash
+
+      - key: SOUNDS_DIR
+        value: backend/sounds
+
+      - key: OUTPUT_DIR
+        value: backend/output
+
+      - key: IMAGES_DIR
+        value: imagenes_generadas
+
+      - key: INATURALIST_API_URL
+        value: https://api.inaturalist.org/v1
+
+      - key: REQUEST_TIMEOUT
+        value: "10"
+
+      - key: LOG_LEVEL
+        value: INFO
+
+    # Healthcheck
+    healthCheckPath: /health
+
+    # Configuración de disco (para archivos generados)
+    disk:
+      name: datar-data
+      mountPath: /opt/render/project/src/backend/output
+      sizeGB: 1
+
+# Notas importantes:
+# 1. GOOGLE_GENAI_API_KEY debe configurarse en el dashboard de Render
+# 2. Si tienes archivos de audio en backend/sounds/, considera subirlos a un bucket de almacenamiento
+# 3. El plan 'free' tiene limitaciones (servicios se duermen después de inactividad)
+# 4. Para archivos estáticos del frontend, asegúrate de que estén en el repositorio

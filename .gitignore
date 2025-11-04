@@ -20,9 +20,7 @@ htmlcov/
 
 # Varios
 instrucciones.md
-render.yaml
 DEPLOY.md
-start.sh
 guia.txt
 
 # ===== Variables de Entorno (IMPORTANTE) =====
