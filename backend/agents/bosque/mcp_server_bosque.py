@@ -1,6 +1,6 @@
 # MCP/mcp_server_bosque.py
 
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 import requests
 from bs4 import BeautifulSoup
 import os
@@ -303,10 +303,7 @@ def inferir_especies(descripcion: str) -> str:
 
     return salida
 
-# CRÍTICO: Cambiar el if __name__ == "__main__" por esto
+# Ejecutar el servidor cuando se llama directamente
 if __name__ == "__main__":
-    import sys
-    import asyncio
-
-    # Usar el método correcto para ejecutar el servidor
-    asyncio.run(mcp.run())
+    # mcp.run() es síncrono y usa STDIO transport por defecto
+    mcp.run()

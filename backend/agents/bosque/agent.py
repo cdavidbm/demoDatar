@@ -1,22 +1,8 @@
 from google.adk.agents.llm_agent import Agent
-from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
-from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
-from mcp import StdioServerParameters
-import os
+from google.adk.tools import FunctionTool
 
-# Obtener la ruta absoluta del servidor MCP
-current_dir = os.path.dirname(os.path.abspath(__file__))
-mcp_server_path = os.path.join(current_dir, "mcp_server_bosque.py")
-
-# Conecta el servidor FastMCP
-mcp_bosque_tool = MCPToolset(
-    connection_params=StdioConnectionParams(
-        server_params=StdioServerParameters(
-            command="python",
-            args=["-u", mcp_server_path],  # -u para unbuffered output
-        )
-    )
-)
+# Importar las herramientas nativas
+from .tools import inferir_especies, explorar_pdf, leer_pagina, explorar
 
 # Pasa las herramientas directamente en el constructor
 root_agent = Agent(
@@ -60,5 +46,10 @@ root_agent = Agent(
         excesivamente técnico ni a metáforas antropocéntricas.
         Para esto usa los cuestionamientos planteados en los pdfs disponibles en la herramienta explorar_pdf.
     """,
-    tools=[mcp_bosque_tool]
+    tools=[
+        FunctionTool(inferir_especies),
+        FunctionTool(explorar_pdf),
+        FunctionTool(leer_pagina),
+        FunctionTool(explorar)
+    ]
 )
