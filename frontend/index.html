@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{DATAR} - Laboratorio de experimentación con datos ambientales basados en la orquestación de agentes autónomos">
+    <title>{DATAR} - Laboratorio de Datos Ambientales</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="header__title">{DATAR}</h1>
+            <p class="header__subtitle">Laboratorio de Experimentación con Datos Ambientales</p>
+            <p class="header__description">
+                Basado en la orquestación de agentes autónomos impulsados por modelos de lenguaje
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Introducción -->
+            <section class="intro">
+                <h2 class="section-title">¿Qué es {DATAR}?</h2>
+                <p>
+                    El laboratorio <strong>{DATAR}</strong> desarrolla una experimentación transdisciplinar con
+                    <strong>datos ambientales abiertos</strong>, utilizando <strong>agentes autónomos impulsados por LLMs</strong>.
+                </p>
+                <p>
+                    El proceso busca generar una comprensión más situada y vivencial de la
+                    <strong>Estructura Ecológica Principal (EEP)</strong> de Bogotá, combinando trabajo de campo,
+                    programación colaborativa y encuentros con expertos en ciencia de datos, ecología y tecnología.
+                </p>
+            </section>
+
+            <!-- Selección de Modo -->
+            <section class="mode-selection">
+                <h2 class="section-title">¿Qué tipo de exploración quieres hacer hoy?</h2>
+                <div class="mode-buttons">
+                    <button class="mode-btn mode-btn--free active" onclick="showMode('free')">
+                        <span class="mode-btn__icon">🔬</span>
+                        <span class="mode-btn__title">Exploración Libre</span>
+                        <span class="mode-btn__desc">Interactúa con uno o más agentes</span>
+                    </button>
+                    <button class="mode-btn mode-btn--guided" onclick="showMode('guided')">
+                        <span class="mode-btn__icon">🧭</span>
+                        <span class="mode-btn__title">Experiencias Guiadas</span>
+                        <span class="mode-btn__desc">Viajes predefinidos con múltiples agentes</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Modo: Exploración Libre -->
+            <section id="free-mode" class="exploration-mode">
+                <h2 class="section-title">Agentes Disponibles</h2>
+                <p class="section-description">
+                    Selecciona uno o más agentes con los que deseas interactuar.
+                    Cada agente tiene especialidades únicas para ayudarte a explorar los datos ambientales de Bogotá.
+                </p>
+
+                <!-- Grid de Agentes -->
+                <div id="agents-grid" class="agents-grid">
+                    <!-- Los agentes se cargarán dinámicamente con JavaScript -->
+                </div>
+
+                <!-- Área de Chat -->
+                <div id="chat-container" class="chat-container" style="display: none;">
+                    <div class="chat-header">
+                        <h3 id="chat-title" class="chat-title">Chat con Agente</h3>
+                        <button class="chat-close" onclick="closeChat()">✕</button>
+                    </div>
+
+                    <div id="chat-messages" class="chat-messages">
+                        <!-- Los mensajes se cargarán aquí dinámicamente -->
+                    </div>
+
+                    <div class="chat-input-container">
+                        <textarea
+                            id="chat-input"
+                            class="chat-input"
+                            placeholder="Escribe tu mensaje aquí..."
+                            rows="3"
+                        ></textarea>
+                        <button id="send-button" class="chat-send-btn" onclick="sendMessage()">
+                            Enviar
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modo: Experiencias Guiadas -->
+            <section id="guided-mode" class="exploration-mode" style="display: none;">
+                <h2 class="section-title">Experiencias Guiadas</h2>
+                <p class="section-description">
+                    Estas experiencias te guían a través de un viaje estructurado,
+                    donde cada agente se activa según la fase de exploración.
+                </p>
+
+                <!-- Grid de Experiencias -->
+                <div id="experiences-grid" class="experiences-grid">
+                    <!-- Las experiencias se cargarán dinámicamente con JavaScript -->
+                </div>
+
+                <!-- Flujo de Experiencia Activa -->
+                <div id="experience-flow" class="experience-flow" style="display: none;">
+                    <div class="experience-header">
+                        <h3 id="experience-title" class="experience-title">Experiencia</h3>
+                        <button class="experience-close" onclick="closeExperience()">✕</button>
+                    </div>
+
+                    <div class="experience-progress">
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+                        </div>
+                        <p id="progress-text" class="progress-text">Etapa 1 de 3</p>
+                    </div>
+
+                    <div id="experience-content" class="experience-content">
+                        <!-- Contenido de la experiencia -->
+                    </div>
+
+                    <div class="experience-controls">
+                        <button id="prev-stage-btn" class="exp-btn exp-btn--prev" onclick="prevStage()" disabled>
+                            ← Anterior
+                        </button>
+                        <button id="next-stage-btn" class="exp-btn exp-btn--next" onclick="nextStage()">
+                            Siguiente →
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>
+                {DATAR} - Laboratorio de experimentación con datos ambientales ·
+                Franja Plataforma Satélite · 2025
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>

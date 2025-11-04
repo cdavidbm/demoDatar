@@ -1,0 +1,85 @@
+# {DATAR} - Laboratorio de Experimentación con Datos Ambientales
+# Dependencias del proyecto
+
+# ===== Core Framework =====
+# ADK (Agent Development Kit) de Google
+# NOTA: La instalación de ADK puede requerir pasos específicos
+# Consulta: https://github.com/google/adk-toolkit
+google-adk>=0.1.0
+
+# ===== Servidor Web =====
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# ===== LLM y Generative AI =====
+google-generativeai>=0.3.0
+google-genai>=0.2.0
+
+# ===== MCP (Model Context Protocol) =====
+mcp>=0.1.0
+fastmcp>=0.1.0
+
+# ===== API y Requests =====
+requests>=2.31.0
+httpx>=0.25.0
+
+# ===== Procesamiento de Audio =====
+pydub>=0.25.1
+sounddevice>=0.4.6
+
+# ===== Procesamiento de Imágenes =====
+Pillow>=10.1.0
+
+# ===== Visualización y Gráficas =====
+matplotlib>=3.8.0
+numpy>=1.26.0
+
+# ===== Web Scraping =====
+beautifulsoup4>=4.12.0
+lxml>=4.9.3
+
+# ===== PDF Processing =====
+PyMuPDF>=1.23.0  # fitz
+
+# ===== Variables de Entorno =====
+python-dotenv>=1.0.0
+
+# ===== Modelos de Datos =====
+pydantic>=2.5.0
+
+# ===== Utilidades =====
+typing-extensions>=4.8.0
+
+# ===== Testing (Opcional) =====
+pytest>=7.4.3
+pytest-asyncio>=0.21.1
+
+# ===== Calidad de Código (Opcional) =====
+black>=23.11.0
+flake8>=6.1.0
+mypy>=1.7.0
+
+# ===== NOTAS DE INSTALACIÓN =====
+#
+# 1. Crear entorno virtual:
+#    python -m venv venv
+#
+# 2. Activar entorno virtual:
+#    - Windows: venv\Scripts\activate
+#    - Unix/MacOS: source venv/bin/activate
+#
+# 3. Instalar dependencias:
+#    pip install -r requirements.txt
+#
+# 4. Requisitos adicionales:
+#    - FFmpeg (para pydub): https://ffmpeg.org/download.html
+#    - Git LFS (para archivos de audio grandes, opcional)
+#
+# 5. Variables de entorno:
+#    Crear archivo .env con:
+#    GEMINI_API_KEY=tu_api_key_aqui
+#
+# 6. ADK Installation:
+#    Si google-adk no está disponible en PyPI, puede que necesites:
+#    pip install git+https://github.com/google/adk-toolkit.git

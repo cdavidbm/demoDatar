@@ -1,0 +1,60 @@
+# {DATAR} - Git Ignore
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+.Python
+venv/
+env/
+.venv
+*.egg
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+instrucciones.md
+
+# ===== Variables de Entorno (IMPORTANTE) =====
+.env
+.env.local
+.env.*.local
+
+# ===== Archivos Generados del Proyecto =====
+# Audio generado
+backend/output/*.mp3
+
+# Imágenes generadas
+imagenes_generadas/*.png
+
+# Archivos de audio grandes (no versionar)
+backend/sounds/*.wav
+backend/sounds/*.mp3
+backend/sounds/*.m4a
+
+# PDFs locales del Agente Bosque
+backend/agents/bosque/pdfs/
+
+# ===== IDEs =====
+.vscode/
+.idea/
+*.code-workspace
+
+# ===== Sistema Operativo =====
+.DS_Store
+Thumbs.db
+*~
+
+# ===== Logs y Temporales =====
+*.log
+*.tmp
+*.swp
+logs/
+
+# ===== Bases de Datos Locales =====
+*.db
+*.sqlite
