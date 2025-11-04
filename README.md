@@ -9,22 +9,6 @@ Sistema de experimentación con datos ambientales abiertos basado en la orquesta
 
 ---
 
-## 📋 Tabla de Contenidos
-
-- [Introducción](#introducción)
-- [Características](#características)
-- [Arquitectura](#arquitectura)
-- [Instalación](#instalación)
-- [Configuración](#configuración)
-- [Uso](#uso)
-- [Agentes Disponibles](#agentes-disponibles)
-- [API REST](#api-rest)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Contribuciones](#contribuciones)
-- [Equipo](#equipo)
-
----
-
 ## 🌍 Introducción
 
 El laboratorio **{DATAR}** desarrolla una experimentación transdisciplinar con **datos ambientales abiertos**, utilizando **agentes autónomos impulsados por LLMs**. El proceso busca generar una comprensión más situada y vivencial de la **Estructura Ecológica Principal (EEP)** de Bogotá, combinando trabajo de campo, programación colaborativa y encuentros con expertos en ciencia de datos, ecología y tecnología.
@@ -403,31 +387,4 @@ Plataforma de ciencia ciudadana administrada por el Instituto Alexander von Humb
 
 ---
 
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
----
-
-## 🙏 Agradecimientos
-
-- Instituto Alexander von Humboldt (iNaturalist Colombia)
-- Franja Plataforma Satélite
-- Google (ADK y Gemini)
-- Comunidad de ciencia ciudadana de Bogotá
-
----
-
-## 📧 Contacto
-
-Para preguntas o colaboraciones, contacta a través de:
-- GitHub Issues: [Reportar un problema](https://github.com/tu-usuario/PropuestaData/issues)
-- Documentación: [Wiki del proyecto](https://github.com/tu-usuario/PropuestaData/wiki)
-
----
-
 **{DATAR}** - *Tejiendo datos ambientales con conciencia territorial* 🌿
-
----
-
-*Última actualización: Noviembre 2025*
